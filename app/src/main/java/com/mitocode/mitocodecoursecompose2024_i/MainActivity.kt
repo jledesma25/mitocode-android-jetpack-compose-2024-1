@@ -11,8 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import com.mitocode.mitocodecoursecompose2024_i.components.MyFirstComposable
-import com.mitocode.mitocodecoursecompose2024_i.components.PlusAndSubstractComponent
+import com.mitocode.mitocodecoursecompose2024_i.examples.components.MyFirstComposable
+import com.mitocode.mitocodecoursecompose2024_i.examples.components.PlusAndSubstractComponent
+import com.mitocode.mitocodecoursecompose2024_i.examples.components.SurveyComponent
 import com.mitocode.mitocodecoursecompose2024_i.ui.theme.MitocodeCourseCompose2024ITheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +21,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyFirstComposable()
+
         }
     }
 }

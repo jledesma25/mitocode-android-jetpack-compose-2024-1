@@ -1,4 +1,4 @@
-package com.mitocode.mitocodecoursecompose2024_i.components
+package com.mitocode.mitocodecoursecompose2024_i.examples.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
