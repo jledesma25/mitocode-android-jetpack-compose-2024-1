@@ -29,8 +29,6 @@ import com.mitocode.mitocodecoursecompose2024_i.ui.theme.PrimaryButton
 
 @Composable
 fun WelcomeScreen(onClick: () -> Unit) {
-
-
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
