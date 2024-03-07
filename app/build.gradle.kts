@@ -72,4 +72,7 @@ dependencies {
 
     //Pager
     implementation("com.google.accompanist:accompanist-pager:0.28.0")
+
+    //Icons Material3
+    implementation("androidx.compose.material:material-icons-extended:1.6.0")
 }

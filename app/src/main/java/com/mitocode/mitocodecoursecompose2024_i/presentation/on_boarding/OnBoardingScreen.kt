@@ -1,5 +1,6 @@
 package com.mitocode.mitocodecoursecompose2024_i.presentation.on_boarding
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,10 +12,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -23,8 +28,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.mitocode.mitocodecoursecompose2024_i.R
+import com.mitocode.mitocodecoursecompose2024_i.presentation.common.ButtonComponent
 import com.mitocode.mitocodecoursecompose2024_i.presentation.common.ImageComponent
 import com.mitocode.mitocodecoursecompose2024_i.presentation.common.TextComponent
 import com.mitocode.mitocodecoursecompose2024_i.ui.theme.PrimaryButton
@@ -33,22 +40,42 @@ import com.mitocode.mitocodecoursecompose2024_i.ui.theme.PrimaryText
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun OnBoardingScreen() {
+fun OnBoardingScreen(
+    onClick: () -> Unit
+) {
 
     val pagerState = rememberPagerState()
+
+    val pages = listOf(
+        OnBoardingPage(
+            image = R.drawable.image01,
+            title = "Explorer",
+            description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy"
+        ),
+        OnBoardingPage(
+            image = R.drawable.image02,
+            title = "Discover",
+            description = "essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing"
+        ),
+        OnBoardingPage(
+            image = R.drawable.image03,
+            title = "Power",
+            description = "popular belief, Lorem Ipsum is not simply random text. It has roots in a piece"
+        )
+    )
 
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
 
         HorizontalPager(
-            count = 3,
+            count = pages.size,
             state = pagerState,
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(10f)
-        ) {
-            PagerOnBoarding()
+        ) { index ->
+            PagerOnBoarding(pages[index])
         }
         Row(
             modifier = Modifier
@@ -56,15 +83,30 @@ fun OnBoardingScreen() {
                 .align(Alignment.CenterHorizontally),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            PagerFooter()
+            PagerFooter(pages, pagerState)
         }
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            contentAlignment = Alignment.Center
+        ) {
+            FinishButtonComponent(
+                pagerState = pagerState,
+                pages = pages,
+                onClick = {
+                    onClick()
+                }
+            )
+        }
+
 
     }
 
 }
 
 @Composable
-fun PagerOnBoarding() {
+fun PagerOnBoarding(onBoardingPage: OnBoardingPage) {
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -73,14 +115,14 @@ fun PagerOnBoarding() {
     ) {
 
         ImageComponent(
-            image = R.drawable.image01,
+            image = onBoardingPage.image,
             description = "Image 01",
             modifier = Modifier
                 .fillMaxWidth(0.5f)
                 .fillMaxHeight(0.7f)
         )
         TextComponent(
-            text = "Explorer",
+            text = onBoardingPage.title,
             style = TextStyle(
                 color = PrimaryButton,
                 fontWeight = FontWeight.Bold,
@@ -89,8 +131,7 @@ fun PagerOnBoarding() {
             )
         )
         TextComponent(
-            text = "Lorem Ipsum is simply dummy text of the\n" +
-                    "printing and typesetting industry.",
+            text = onBoardingPage.description,
             style = TextStyle(
                 fontWeight = FontWeight.Medium,
                 fontSize = 14.sp,
@@ -106,16 +147,46 @@ fun PagerOnBoarding() {
 
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
-fun PagerFooter() {
+fun PagerFooter(pages: List<OnBoardingPage>, pagerState: PagerState) {
 
-    repeat(3){
-        Box(modifier = Modifier
-            .padding(2.dp)
-            .clip(CircleShape)
-            .background(PrimaryButton)
-            .size(12.dp)
+    repeat(pages.size) { iteration ->
+        val color = if (pagerState.currentPage == iteration) PrimaryButton else Color.LightGray
+        Box(
+            modifier = Modifier
+                .padding(2.dp)
+                .clip(CircleShape)
+                .background(color)
+                .size(12.dp)
         )
+    }
+
+}
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun FinishButtonComponent(
+    modifier: Modifier = Modifier,
+    pagerState: PagerState,
+    pages: List<OnBoardingPage>,
+    onClick:()->Unit
+) {
+    AnimatedVisibility(
+        visible = pagerState.currentPage == pages.size - 1
+    ) {
+        Button(
+            modifier = modifier,
+            onClick = { onClick() },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = PrimaryButton,
+                contentColor = Color.White
+            )
+        ) {
+            Text(
+                text = "Empecemos"
+            )
+        }
     }
 
 }
@@ -124,5 +195,5 @@ fun PagerFooter() {
 @Preview(name = "Onboarding", showSystemUi = true)
 @Composable
 fun OnBoardingScreenPreview() {
-    OnBoardingScreen()
+    OnBoardingScreen(onClick = {})
 }

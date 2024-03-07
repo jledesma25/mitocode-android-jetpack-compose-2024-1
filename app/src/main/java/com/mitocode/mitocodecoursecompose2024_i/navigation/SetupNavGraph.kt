@@ -14,19 +14,25 @@ fun SetupNavGraph() {
 
     NavHost(
         navController = navController,
-        startDestination = "welcome_screen"
+        startDestination = Screen.Welcome.route
     ){
-        composable(route = "welcome_screen"){
+        composable(route = Screen.Welcome.route){
             WelcomeScreen(
                 onClick = {
-                    navController.navigate(route = "onboarding_screen")
+                    navController.popBackStack()
+                    navController.navigate(route = Screen.OnBoarding.route)
                 }
             )
         }
-        composable(route = "onboarding_screen"){
-            OnBoardingScreen()
+        composable(route = Screen.OnBoarding.route){
+            OnBoardingScreen(
+                onClick = {
+                    navController.popBackStack()
+                    navController.navigate(route = Screen.Login.route)
+                }
+            )
         }
-        composable(route = "login_screen"){
+        composable(route = Screen.Login.route){
             LoginScreen()
         }
     }
