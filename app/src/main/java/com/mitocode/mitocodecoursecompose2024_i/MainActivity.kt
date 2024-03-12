@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.mitocode.mitocodecoursecompose2024_i.data.networking.Api
 import com.mitocode.mitocodecoursecompose2024_i.examples.components.MyFirstComposable
 import com.mitocode.mitocodecoursecompose2024_i.examples.components.PlusAndSubstractComponent
 import com.mitocode.mitocodecoursecompose2024_i.examples.components.SurveyComponent
@@ -27,6 +28,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             SetupNavGraph()
         }
