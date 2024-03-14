@@ -23,7 +23,9 @@ import com.mitocode.mitocodecoursecompose2024_i.presentation.login.LoginScreen
 import com.mitocode.mitocodecoursecompose2024_i.presentation.on_boarding.OnBoardingScreen
 import com.mitocode.mitocodecoursecompose2024_i.presentation.welcome.WelcomeScreen
 import com.mitocode.mitocodecoursecompose2024_i.ui.theme.MitocodeCourseCompose2024ITheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

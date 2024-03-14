@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -48,6 +49,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mitocode.mitocodecoursecompose2024_i.R
 import com.mitocode.mitocodecoursecompose2024_i.data.model.LoginRequest
 import com.mitocode.mitocodecoursecompose2024_i.data.networking.Api
@@ -64,8 +66,31 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+//Suscribir el viewmodel
+//Inyección de dependecias : HILT , DAGGER, KOIN
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    viewmodel: LoginViewModel = hiltViewModel()
+) {
+
+    val state = viewmodel.state
+
+
+
+    if (state.isLoading) {
+        Box(modifier = Modifier
+            .fillMaxSize(),
+            contentAlignment = Alignment.Center) {
+            //CircularProgressIndicator()
+            Text(text = "PROGRESS", fontSize = 30.sp)
+        }
+
+    }
+
+    if(state.error!=null){
+        println("${state.error}")
+    }
+
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -84,7 +109,7 @@ fun LoginScreen() {
                 .weight(4f)
                 .padding(start = 24.dp, end = 24.dp, top = 24.dp)
         ) {
-            ContentLogin()
+            ContentLogin(viewmodel)
         }
         Column(
             modifier = Modifier
@@ -120,7 +145,7 @@ fun HeaderLogin() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContentLogin() {
+fun ContentLogin(viewmodel: LoginViewModel) {
 
     var email by remember {
         mutableStateOf("")
@@ -230,7 +255,7 @@ fun ContentLogin() {
             containerColor = PrimaryButton,
             contentColor = Color.White,
             onClickButton = {
-
+                viewmodel.signIn(email,password)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -289,7 +314,7 @@ fun FooterLogin() {
 @Preview(name = "LoginScreen", showSystemUi = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+    //LoginScreen()
 }
 
 /*GlobalScope.launch(Dispatchers.Main) {
