@@ -4,6 +4,8 @@ import com.mitocode.mitocodecoursecompose2024_i.core.Result
 import com.mitocode.mitocodecoursecompose2024_i.data.model.LoginRequest
 import com.mitocode.mitocodecoursecompose2024_i.data.model.UserDTO
 import com.mitocode.mitocodecoursecompose2024_i.data.networking.Api
+import com.mitocode.mitocodecoursecompose2024_i.domain.model.User
+import com.mitocode.mitocodecoursecompose2024_i.domain.model.toUser
 import com.mitocode.mitocodecoursecompose2024_i.domain.repository.LoginRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -11,7 +13,7 @@ import java.io.IOException
 
 //RETROFIT -> API
 class LoginRepositoryImp : LoginRepository {
-    override suspend fun signIn(email: String, password: String) : Flow<Result<UserDTO>> = flow {
+    override suspend fun signIn(email: String, password: String) : Flow<Result<User>> = flow {
         try{
 
             emit(Result.Loading())
@@ -28,7 +30,7 @@ class LoginRepositoryImp : LoginRepository {
                 val loginResponse = response.body()
                 if(loginResponse?.success == true){
                     //Usuario existe
-                    emit(Result.Success(data = loginResponse.data))
+                    emit(Result.Success(data = loginResponse.data.toUser()))
                 }else{
                     //Usuario no existe
                     emit(Result.Error(message = loginResponse?.message))

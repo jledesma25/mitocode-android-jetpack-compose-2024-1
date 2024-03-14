@@ -9,9 +9,11 @@ import com.mitocode.mitocodecoursecompose2024_i.core.Result
 import com.mitocode.mitocodecoursecompose2024_i.data.model.UserDTO
 import com.mitocode.mitocodecoursecompose2024_i.data.repository.LoginRepositoryImp
 import com.mitocode.mitocodecoursecompose2024_i.domain.repository.LoginRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class LoginViewModel : ViewModel() {
 
