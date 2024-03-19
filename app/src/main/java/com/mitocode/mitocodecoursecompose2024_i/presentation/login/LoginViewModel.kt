@@ -31,16 +31,16 @@ class LoginViewModel : ViewModel() {
                         //val isLoading:Boolean=false,
                         //val error:String?="el usuario no se encuentra",
                         //val successfull: UserDTO?=null
-                        state = state.copy(error = it.message, isLoading = false)
+                        state = state.copy(error = it.message, isLoading = false, successfull = null)
                     }
                     is Result.Loading -> {
                         //val isLoading:Boolean=true,
                         //val error:String?=null,
                         //val successfull: UserDTO?=null
-                        state = state.copy(isLoading = true)
+                        state = state.copy(isLoading = true,successfull = null, error = null)
                     }
                     is Result.Success -> {
-                        state = state.copy(successfull = it.data, isLoading = false)
+                        state = state.copy(successfull = it.data, isLoading = false, error = null)
                     }
                 }
             }.launchIn(viewModelScope)
@@ -51,6 +51,7 @@ class LoginViewModel : ViewModel() {
 
 
     }
+
 
 
 }

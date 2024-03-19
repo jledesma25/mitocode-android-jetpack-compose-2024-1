@@ -73,21 +73,23 @@ import kotlinx.coroutines.withContext
 //Inyección de dependecias : HILT , DAGGER, KOIN
 @Composable
 fun LoginScreen(
-    viewmodel: LoginViewModel = hiltViewModel()
+    viewmodel: LoginViewModel = hiltViewModel(),
+    onNavigateHome:()->Unit
 ) {
 
     val state = viewmodel.state
     val context = LocalContext.current
 
-
-    if(state.error!=null){
-        Toast.makeText(context,"${state.error}",Toast.LENGTH_LONG).show()
+    LaunchedEffect(key1 = state.successfull, key2 = state.error){
+        if(state.error!=null){
+            Toast.makeText(context,"${state.error}",Toast.LENGTH_LONG).show()
+        }
+        if(state.successfull!=null){
+            //Navigate to Home
+            Toast.makeText(context,"Bienvenido",Toast.LENGTH_LONG).show()
+            onNavigateHome()
+        }
     }
-
-    if(state.successfull!=null){
-        Toast.makeText(context,state.successfull?.email,Toast.LENGTH_LONG).show()
-    }
-
 
     Column(
         modifier = Modifier.fillMaxSize()

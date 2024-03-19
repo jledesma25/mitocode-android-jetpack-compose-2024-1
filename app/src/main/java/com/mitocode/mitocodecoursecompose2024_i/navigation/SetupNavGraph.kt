@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.mitocode.mitocodecoursecompose2024_i.presentation.home.HomeScreen
 import com.mitocode.mitocodecoursecompose2024_i.presentation.login.LoginScreen
 import com.mitocode.mitocodecoursecompose2024_i.presentation.on_boarding.OnBoardingScreen
 import com.mitocode.mitocodecoursecompose2024_i.presentation.welcome.WelcomeScreen
@@ -33,7 +34,14 @@ fun SetupNavGraph() {
             )
         }
         composable(route = Screen.Login.route){
-            LoginScreen()
+            LoginScreen(
+                onNavigateHome = {
+                    navController.navigate(route = Screen.Home.route)
+                }
+            )
+        }
+        composable(route = Screen.Home.route){
+            HomeScreen()
         }
     }
 }
