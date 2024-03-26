@@ -4,6 +4,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import com.mitocode.mitocodecoursecompose2024_i.data.repository.DishRepositoryImp
+import com.mitocode.mitocodecoursecompose2024_i.data.repository.LoginRepositoryImp
+import com.mitocode.mitocodecoursecompose2024_i.domain.repository.DishRepository
+import com.mitocode.mitocodecoursecompose2024_i.domain.repository.LoginRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,6 +33,18 @@ class AppModule {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
 
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoginRepository(sharedPreferences: SharedPreferences) : LoginRepository{
+        return LoginRepositoryImp(sharedPreferences)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDishRepository(sharedPreferences: SharedPreferences) : DishRepository{
+        return DishRepositoryImp(sharedPreferences)
     }
 
 }
