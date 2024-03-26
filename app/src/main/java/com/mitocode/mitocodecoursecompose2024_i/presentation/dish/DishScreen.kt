@@ -1,5 +1,7 @@
 package com.mitocode.mitocodecoursecompose2024_i.presentation.dish
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -15,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -22,26 +25,56 @@ import androidx.compose.material.icons.filled.StarOutline
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.mitocode.mitocodecoursecompose2024_i.R
+import com.mitocode.mitocodecoursecompose2024_i.domain.model.Dish
 import com.mitocode.mitocodecoursecompose2024_i.presentation.common.SpacerComponent
 import com.mitocode.mitocodecoursecompose2024_i.presentation.common.TextComponent
 import com.mitocode.mitocodecoursecompose2024_i.ui.theme.PrimaryButton
 
 @Composable
-fun DishScreen(paddingValues: PaddingValues) {
+fun DishScreen(
+    viewmodel : DishViewModel = hiltViewModel(),
+    paddingValues: PaddingValues
+) {
+
+    val state = viewmodel.state
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = true) {
+        viewmodel.getDishes()
+    }
+
+    if(state.isLoading){
+        CircularProgressIndicator(
+            color = PrimaryButton,
+            strokeWidth = 4.dp
+        )
+    }
+
+    if(state.error != null){
+        Toast.makeText(context,state.error,Toast.LENGTH_LONG).show()
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -55,8 +88,13 @@ fun DishScreen(paddingValues: PaddingValues) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
-            items(4) {
-                DishItem()
+            state.successfull?.let { dishes ->
+                items(dishes) {dish ->
+                    DishItem(
+                        dish = dish,
+                        context = context
+                    )
+                }
             }
 
         }
@@ -67,7 +105,9 @@ fun DishScreen(paddingValues: PaddingValues) {
 
 @Composable
 fun DishItem(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    dish:Dish,
+    context: Context
 ) {
     Card(
         border = BorderStroke(width = 2.dp, color = PrimaryButton),
@@ -76,17 +116,21 @@ fun DishItem(
             .clickable { }
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
-            Image(
+            AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp),
-                painter = painterResource(id = R.drawable.template_dish),
+                    .height(100.dp)
+                    .clip(RoundedCornerShape(16.dp)),
+                model = ImageRequest.Builder(context)
+                    .data(dish.image)
+                    .crossfade(2000)
+                    .build(),
                 contentDescription = "Template Dish",
                 contentScale = ContentScale.Crop
             )
             SpacerComponent(modifier = Modifier.height(12.dp))
             TextComponent(
-                text = "Arroz Chaufa",
+                text = dish.name,
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
@@ -101,7 +145,7 @@ fun DishItem(
                 )
             )
             TextComponent(
-                text = "20.8",
+                text = "${dish.carbohydrates}",
                 style = TextStyle(
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Bold,
@@ -117,14 +161,14 @@ fun DishItem(
                 )
             )
             TextComponent(
-                text = "$20.0",
+                text = "$${dish.price}",
                 style = TextStyle(
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Bold,
                     color = PrimaryButton
                 )
             )
-            RatingBar(currentRating = 4)
+            RatingBar(currentRating = dish.rating.toInt())
         }
     }
 }

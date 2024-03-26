@@ -15,13 +15,14 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(val repository: LoginRepository) : ViewModel() {
 
     var state by mutableStateOf(LoginState())
 
     fun signIn(email:String,password:String){
 
-        val repository : LoginRepository = LoginRepositoryImp()
+        //val repository : LoginRepository = LoginRepositoryImp()
 
 
         viewModelScope.launch {

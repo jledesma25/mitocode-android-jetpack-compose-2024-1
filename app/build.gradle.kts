@@ -85,7 +85,13 @@ dependencies {
 
     //Hilt
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
-    implementation("com.google.dagger:hilt-android:2.42")
-    kapt("com.google.dagger:hilt-android-compiler:2.42")
+    implementation("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-android-compiler:2.50")
     kapt("androidx.hilt:hilt-compiler:1.0.0")
+
+    //Coil
+    implementation("io.coil-kt:coil-compose:2.0.0")
+
+    //Security Crypto - SharedPreferences
+    implementation("androidx.security:security-crypto:1.0.0-alpha02")
 }

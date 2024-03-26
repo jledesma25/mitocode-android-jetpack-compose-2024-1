@@ -37,6 +37,17 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/*
+ //Save
+        val preferences = getSharedPreferences("PREFERENCES_TOKEN",0).edit()
+        preferences.putString("KEY_TOKEN","1111111111111111111111111111111111")
+        preferences.apply()
+
+        //Get
+        val preferencesRead = getSharedPreferences("PREFERENCES_TOKEN",0)
+        val token = preferencesRead.getString("KEY_TOKEN","")
+ */
+
 
 
 
