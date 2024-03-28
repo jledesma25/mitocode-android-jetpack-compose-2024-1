@@ -3,8 +3,8 @@ package com.mitocode.mitocodecoursecompose2024_i.data.repository
 import android.content.Context
 import android.content.SharedPreferences
 import com.mitocode.mitocodecoursecompose2024_i.core.Result
-import com.mitocode.mitocodecoursecompose2024_i.data.model.LoginRequest
-import com.mitocode.mitocodecoursecompose2024_i.data.model.UserDTO
+import com.mitocode.mitocodecoursecompose2024_i.data.networking.model.LoginRequest
+import com.mitocode.mitocodecoursecompose2024_i.data.networking.model.UserDTO
 import com.mitocode.mitocodecoursecompose2024_i.data.networking.Api
 import com.mitocode.mitocodecoursecompose2024_i.domain.model.User
 import com.mitocode.mitocodecoursecompose2024_i.domain.model.toUser

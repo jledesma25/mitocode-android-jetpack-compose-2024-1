@@ -94,4 +94,8 @@ dependencies {
 
     //Security Crypto - SharedPreferences
     implementation("androidx.security:security-crypto:1.0.0-alpha02")
+
+    implementation("androidx.room:room-ktx:2.6.0")
+    implementation("androidx.room:room-runtime:2.6.0")
+    kapt("androidx.room:room-compiler:2.6.0")
 }

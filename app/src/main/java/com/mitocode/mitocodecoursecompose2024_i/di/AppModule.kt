@@ -2,8 +2,11 @@ package com.mitocode.mitocodecoursecompose2024_i.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.room.Room
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import com.mitocode.mitocodecoursecompose2024_i.data.database.AppDatabase
+import com.mitocode.mitocodecoursecompose2024_i.data.database.dao.DishDao
 import com.mitocode.mitocodecoursecompose2024_i.data.repository.DishRepositoryImp
 import com.mitocode.mitocodecoursecompose2024_i.data.repository.LoginRepositoryImp
 import com.mitocode.mitocodecoursecompose2024_i.domain.repository.DishRepository
@@ -43,8 +46,20 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideDishRepository(sharedPreferences: SharedPreferences) : DishRepository{
-        return DishRepositoryImp(sharedPreferences)
+    fun provideDishRepository(sharedPreferences: SharedPreferences, dishDao: DishDao) : DishRepository{
+        return DishRepositoryImp(sharedPreferences,dishDao)
     }
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context) : AppDatabase = Room.databaseBuilder(
+        context,
+        AppDatabase::class.java,
+        "dbMitocodeEats"
+    ).build()
+
+    @Provides
+    @Singleton
+    fun provideDao(db:AppDatabase) : DishDao = db.dishDao()
 
 }

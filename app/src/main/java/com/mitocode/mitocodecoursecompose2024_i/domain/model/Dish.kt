@@ -1,6 +1,7 @@
 package com.mitocode.mitocodecoursecompose2024_i.domain.model
 
-import com.mitocode.mitocodecoursecompose2024_i.data.model.DishDTO
+import com.mitocode.mitocodecoursecompose2024_i.data.database.model.DishEntity
+import com.mitocode.mitocodecoursecompose2024_i.data.networking.model.DishDTO
 
 data class Dish(
     val id:Int,
@@ -32,4 +33,20 @@ fun List<DishDTO>.ToDishList() : List<Dish> = map {
     )
 }
 
+fun Dish.ToDishEntity() : DishEntity{
+    return DishEntity(
+        id = id,
+        name = name,
+        description = description,
+        thumbails = thumbails,
+        image = image,
+        carbohydrates = carbohydrates,
+        proteins = proteins,
+        price = price,
+        rating = rating,
+        ingredients = ingredients,
+        flagHeader = flagHeader,
+        flag = true
+    )
+}
 

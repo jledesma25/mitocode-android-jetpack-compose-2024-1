@@ -54,7 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mitocode.mitocodecoursecompose2024_i.R
-import com.mitocode.mitocodecoursecompose2024_i.data.model.LoginRequest
+import com.mitocode.mitocodecoursecompose2024_i.data.networking.model.LoginRequest
 import com.mitocode.mitocodecoursecompose2024_i.data.networking.Api
 import com.mitocode.mitocodecoursecompose2024_i.presentation.common.ButtonComponent
 import com.mitocode.mitocodecoursecompose2024_i.presentation.common.ImageComponent

@@ -1,6 +1,6 @@
 package com.mitocode.mitocodecoursecompose2024_i.domain.model
 
-import com.mitocode.mitocodecoursecompose2024_i.data.model.UserDTO
+import com.mitocode.mitocodecoursecompose2024_i.data.networking.model.UserDTO
 
 data class User(
     val id:Int,

@@ -1,6 +1,6 @@
 package com.mitocode.mitocodecoursecompose2024_i.core
 
-import com.mitocode.mitocodecoursecompose2024_i.data.model.UserDTO
+import com.mitocode.mitocodecoursecompose2024_i.data.networking.model.UserDTO
 
 sealed class Result<T>(val data:T?=null,val message:String?=null) {
 

@@ -2,8 +2,10 @@ package com.mitocode.mitocodecoursecompose2024_i.data.repository
 
 import android.content.SharedPreferences
 import com.mitocode.mitocodecoursecompose2024_i.core.Result
+import com.mitocode.mitocodecoursecompose2024_i.data.database.dao.DishDao
 import com.mitocode.mitocodecoursecompose2024_i.data.networking.Api
 import com.mitocode.mitocodecoursecompose2024_i.domain.model.Dish
+import com.mitocode.mitocodecoursecompose2024_i.domain.model.ToDishEntity
 import com.mitocode.mitocodecoursecompose2024_i.domain.model.ToDishList
 import com.mitocode.mitocodecoursecompose2024_i.domain.repository.DishRepository
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +13,10 @@ import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import javax.inject.Inject
 
-class DishRepositoryImp @Inject constructor(val sharedPreferences: SharedPreferences) : DishRepository {
+class DishRepositoryImp @Inject constructor(
+    val sharedPreferences: SharedPreferences,
+    val dishDao: DishDao
+) : DishRepository {
     override suspend fun getDishes(): Flow<Result<List<Dish>>> = flow {
 
         try{
@@ -33,5 +38,9 @@ class DishRepositoryImp @Inject constructor(val sharedPreferences: SharedPrefere
         }
 
 
+    }
+
+    override suspend fun saveDish(dish: Dish) {
+        dishDao.save(dish.ToDishEntity())
     }
 }

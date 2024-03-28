@@ -10,9 +10,11 @@ import com.mitocode.mitocodecoursecompose2024_i.data.repository.DishRepositoryIm
 import com.mitocode.mitocodecoursecompose2024_i.domain.model.Dish
 import com.mitocode.mitocodecoursecompose2024_i.domain.repository.DishRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,5 +44,18 @@ class DishViewModel @Inject constructor(val repository: DishRepository)  : ViewM
         }
 
     }
-    
+
+    fun saveFavorite(dish: Dish) {
+
+        viewModelScope.launch {
+            state = state.copy(isLoading = true)
+            withContext(Dispatchers.IO){
+                repository.saveDish(dish)
+            }
+            state = state.copy(isLoading = false)
+
+        }
+
+    }
+
 }

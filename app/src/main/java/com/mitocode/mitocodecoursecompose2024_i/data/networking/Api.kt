@@ -1,8 +1,8 @@
 package com.mitocode.mitocodecoursecompose2024_i.data.networking
 
-import com.mitocode.mitocodecoursecompose2024_i.data.model.DishResponse
-import com.mitocode.mitocodecoursecompose2024_i.data.model.LoginRequest
-import com.mitocode.mitocodecoursecompose2024_i.data.model.LoginResponse
+import com.mitocode.mitocodecoursecompose2024_i.data.networking.model.DishResponse
+import com.mitocode.mitocodecoursecompose2024_i.data.networking.model.LoginRequest
+import com.mitocode.mitocodecoursecompose2024_i.data.networking.model.LoginResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -38,7 +38,7 @@ object Api {
     interface HealthyMethods{
 
         @POST("api/securities/login")
-        suspend fun logIn(@Body request:LoginRequest) : Response<LoginResponse>
+        suspend fun logIn(@Body request: LoginRequest) : Response<LoginResponse>
 
         @GET("api/dish")
         suspend fun getDishes(@Header("Authorization") authorization:String) : Response<DishResponse>
